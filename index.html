@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Trainer - Estudo & Harmonia</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <header class="app-header">
+        <div class="header-container">
+            <h1 class="logo" aria-label="Music Trainer Home">🎶 Music<span>Trainer</span></h1>
+            <div class="header-controls">
+                <button id="theme-toggle" class="btn-icon" aria-label="Alternar Tema">🌓</button>
+                <button id="settings-toggle" class="btn-icon" aria-label="Configurações">⚙️</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section id="screen-home" class="screen active">
+            <div class="welcome-card">
+                <h2>Treine Harmonia Musical de forma divertida</h2>
+                <p>Escolha um dos modos abaixo focado no Campo Harmônico Maior e domine a teoria musical na prática.</p>
+            </div>
+            
+            <div class="game-modes-grid">
+                <button class="mode-card" data-mode="notes">
+                    <div class="mode-icon">🎹</div>
+                    <h3>Identificação de Notas</h3>
+                    <p>Descubra quais notas formam as tríades e tétrades de cada tom.</p>
+                </button>
+                <button class="mode-card" data-mode="degrees">
+                    <div class="mode-icon">📊</div>
+                    <h3>Identificação de Graus</h3>
+                    <p>Analise sequências de acordes e determine seus graus romanos.</p>
+                </button>
+                <button class="mode-card" data-mode="transposition">
+                    <div class="mode-icon">🔄</div>
+                    <h3>Transposição</h3>
+                    <p>Mude progressões inteiras de uma tonalidade para outra instantaneamente.</p>
+                </button>
+            </div>
+
+            <div class="ranking-section">
+                <h3>🏆 Ranking Local (Top 5)</h3>
+                <ul id="ranking-list" class="ranking-list">
+                    <li class="empty-ranking">Nenhuma partida registrada ainda.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="screen-game" class="screen">
+            <div class="game-hud">
+                <div class="hud-item"><span class="label">Questão:</span> <span id="hud-question-num" class="val">1/10</span></div>
+                <div class="hud-item"><span class="label">Pontos:</span> <span id="hud-score" class="val">0</span></div>
+                <div class="hud-item"><span class="label">Combo:</span> <span id="hud-combo" class="val">x1</span></div>
+                <div class="hud-item"><span class="label">Tempo:</span> <span id="hud-timer" class="val">00:00</span></div>
+            </div>
+
+            <div class="progress-bar-container">
+                <div id="game-progress" class="progress-bar" style="width: 0%"></div>
+            </div>
+
+            <div class="question-container">
+                <div id="question-context" class="question-context">Tom: Sol Maior (G)</div>
+                <h2 id="question-text" class="question-title">Quais notas compõem o acorde de C7M?</h2>
+                
+                <div id="answers-area" class="answers-layout"></div>
+
+                <div class="game-actions">
+                    <button id="btn-submit" class="btn btn-primary" aria-label="Confirmar resposta">Confirmar Resposta</button>
+                    <button id="btn-next" class="btn btn-success hidden" aria-label="Próxima pergunta">Próxima Questão ➔</button>
+                </div>
+            </div>
+
+            <div id="feedback-message" class="feedback-toast hidden"></div>
+        </section>
+
+        <section id="screen-result" class="screen">
+            <div class="result-card">
+                <h2>🎉 Partida Concluída!</h2>
+                <p id="result-message">Excelente aproveitamento teórico!</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-box"><span class="stat-val" id="res-xp">+0</span><span class="stat-lbl">XP Total</span></div>
+                    <div class="stat-box"><span class="stat-val" id="res-accuracy">0%</span><span class="stat-lbl">Aproveitamento</span></div>
+                    <div class="stat-box success"><span class="stat-val" id="res-correct">0</span><span class="stat-lbl">Acertos</span></div>
+                    <div class="stat-box danger"><span class="stat-val" id="res-wrong">0</span><span class="stat-lbl">Erros</span></div>
+                    <div class="stat-box"><span class="stat-val" id="res-time">0s</span><span class="stat-lbl">Tempo Gasto</span></div>
+                </div>
+
+                <div class="history-container">
+                    <h3>Histórico de Respostas</h3>
+                    <div id="history-log" class="history-log"></div>
+                </div>
+
+                <button id="btn-restart" class="btn btn-primary btn-block">Jogar Novamente</button>
+            </div>
+        </section>
+    </main>
+
+    <div id="settings-modal" class="modal hidden" aria-hidden="true">
+        <div class="modal-content">
+            <h3>Configurações de Partida</h3>
+            <div class="form-group">
+                <label for="cfg-questions">Quantidade de Questões:</label>
+                <select id="cfg-questions">
+                    <option value="5">5 Perguntas</option>
+                    <option value="10" selected>10 Perguntas</option>
+                    <option value="15">15 Perguntas</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cfg-difficulty">Tipo de Acordes:</label>
+                <select id="cfg-difficulty">
+                    <option value="triads" selected>Tríades Básicas</option>
+                    <option value="tetrads">Tétrades Avançadas (7ªs)</option>
+                </select>
+            </div>
+            <button id="btn-close-settings" class="btn btn-secondary">Salvar e Fechar</button>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+
+</body>
+</html>
